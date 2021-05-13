@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>DEMO1</title>
+    <script src="{% static 'echarts/echarts.min.js' %}"></script>
+</head>
+<body>
+{#<div>{{ create_date_lst }}</div>#}
+{#<div>{{ recharge_user_num_lst }}</div>#}
+{#<div>{{ recharge_amount_num_lst }}</div>#}
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 1200px;height:800px;"></div>
+<script type="text/javascript">
+    {#    60s 刷新一次#}
+    setTimeout(function () {
+        location.reload()
+    }, 60000);
+
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        toolbox: {
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        legend: {
+            data: ['金额数', '用户数']
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: {{ create_date_lst|safe }},
+                {#data: ['2021-05-01~2021-05-07', '2021-05-08~2021-05-14', '2021-05-15~2021-05-21', '2021-05-22~2021-05-28', '2021-05-29~2021-06-04'],#}
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '金额',
+                min: 0,
+                max: 10000,
+                interval: 1000,
+                axisLabel: {
+                    formatter: '{value} ￥'
+                }
+            },
+            {
+                type: 'value',
+                name: '人',
+                min: 0,
+                max: 50,
+                interval: 10,
+                axisLabel: {
+                    formatter: '{value} 人'
+                }
+            }
+        ],
+        series: [
+            {
+                name: '用户数',
+                type: 'bar',
+                yAxisIndex: 1,
+                data: {{ recharge_user_num_lst }}
+            },
+            {
+                name: '金额数',
+                type: 'line',
+                data:{{ recharge_amount_num_lst }}
+            }
+        ]
+    };
+
+    option && myChart.setOption(option);
+
+</script>
+</body>
+</html>
