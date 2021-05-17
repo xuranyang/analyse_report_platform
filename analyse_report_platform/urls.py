@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', app_demo_views.index, name="index"),
     url(r'^analyse_report/$', app_demo_views.get_analyse_demo, name="demo1"),
+    url(r'^demo/$', app_demo_views.get_big_screen, name="demo2"),
 ]

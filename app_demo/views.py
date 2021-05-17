@@ -30,3 +30,7 @@ def get_analyse_demo(request):
     return render(request, 'analyse_demo.html',
                   {'create_date_lst': create_date_lst, 'recharge_user_num_lst': recharge_user_num_lst,
                    'recharge_amount_num_lst': recharge_amount_num_lst})
+
+
+def get_big_screen(request):
+    return render(request, 'big_screen.html')
